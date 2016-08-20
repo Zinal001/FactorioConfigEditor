@@ -30,7 +30,7 @@ script.on_load(on_load)
 function On_CE_Config_Changed(event)
 
 	--And the mod is equal to this mod name
-	if event.mod == "<<MOD NAME>>" then
+	if event.mod == "SimpleMod" then
 		
 		--Update the local config variable with the data provided
 		global.config.ticksUntilAttack = event.data.ticksUntilAttack
@@ -59,11 +59,11 @@ function Setup_Config_Editor()
 
 	if game.active_mods["ConfigEditor"] ~= nil then
 	
-		local modConfigExists = remote.call("Config Editor", "mod_exists", "<<MOD NAME>>")
+		local modConfigExists = remote.call("Config Editor", "mod_exists", "SimpleMod")
 		
 		if not modConfigExists then
 			
-			remote.call("Config Editor", "set_fields", "<<MOD NAME>>", {
+			remote.call("Config Editor", "set_fields", "SimpleMod", {
 				ticksUntilAttack = {
 					type = "number",
 					title = "Ticks Until Attack",
@@ -79,8 +79,8 @@ function Setup_Config_Editor()
 			})
 			
 		else
-			global.config.ticksUntilAttack = remote.call("Config Editor", "get_value", "<<MOD NAME>>", "ticksUntilAttack")
-			global.config.ticksBetweenAttacks = remote.call("Config Editor", "get_value", "<<MOD NAME>>", "ticksBetweenAttacks")
+			global.config.ticksUntilAttack = remote.call("Config Editor", "get_value", "SimpleMod", "ticksUntilAttack")
+			global.config.ticksBetweenAttacks = remote.call("Config Editor", "get_value", "SimpleMod", "ticksBetweenAttacks")
 		end
 		
 		global.CE_config_changed_event = remote.call("Config Editor", "get_config_changed_event")
