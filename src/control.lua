@@ -34,27 +34,27 @@ end
 
 --[[ REMOTE FUNCTIONS ]]--
 
---[[
-	Get the generated ID for the config_changed event.
-	
-	@return uid
-]]--
+----------------------------------------------------------
+-- Get the generated ID for the config_changed event.
+--
+-- @return uid
+----------------------------------------------------------
 function get_config_changed_event()
 	return global.config_changed_event
 end
 
---[[
-	Set a field on a mod configuration
-	
-	@param	string		modName			The name of the mod.
-	@param	string		field			The field to set_field.
-	@param	*			value			The default value of the field.
-	@param	string|nil	dataType		The type of the field. If nil, will be determined by the value.
-	@param	string|nil	description		The description of the field. Will be added to the tooltip.
-	@param	boolean|nil	readonly		Is this field readonly? Defaults to false.
-	
-	@return void
-]]--
+----------------------------------------------------------
+-- Set a field on a mod configuration
+----------------------------------------------------------
+-- @param	string		modName			The name of the mod.
+-- @param	string		field			The field to set_field.
+-- @param	*			value			The default value of the field.
+-- @param	string|nil	dataType		The type of the field. If nil, will be determined by the value.
+-- @param	string|nil	description		The description of the field. Will be added to the tooltip.
+-- @param	boolean|nil	readonly		Is this field readonly? Defaults to false.
+-- 
+-- @return void
+----------------------------------------------------------
 function set_field(modName, field, value, dataType, title, description, readonly)
 	if global.modConfigs[modName] == nil then
 		global.modConfigs[modName] = {}
@@ -73,27 +73,27 @@ function set_field(modName, field, value, dataType, title, description, readonly
 	_Raise_Event(modName)
 end
 
---[[
-	Set all fields of a mod configuration
-	
-	@param	string		modName			The name of the mod.
-	@param	table		data			The new configuration of the mod, see below for format.
-	@param	boolean		overwrite		True to overwrite the mod configuration. This will delete any field that is not present in the data parameter. Defaults to false.
-	
-	data format:
-	data = {
-		Field1 = {				-- The name of the field.
-			type = "dataType", 	-- The type of the value (string, number & boolean is currently supported).
-			title = "",			-- The human-readable name of this field. (OPTIONAL).
-			description = "",	-- The description of this field. (OPTIONAL).
-			value = "",			-- The default value of this field. (OPTIONAL).
-			readonly = false	-- Is this field readonly? Defaults to false (OPTIONAL).
-			
-		}
-	}
-	
-	@return true|false, string			Returns true if the mod was changed, false and a string is returns if an error occurred.
-]]--
+----------------------------------------------------------
+-- Set all fields of a mod configuration
+----------------------------------------------------------
+-- @param	string		modName			The name of the mod.
+-- @param	table		data			The new configuration of the mod, see below for format.
+-- @param	boolean		overwrite		True to overwrite the mod configuration. This will delete any field that is not present in the data parameter. Defaults to false.
+-- 
+-- data format:
+-- data = {
+-- 	Field1 = {				-- The name of the field.
+-- 		type = "dataType", 	-- The type of the value (string, number & boolean is currently supported).
+-- 		title = "",			-- The human-readable name of this field. (OPTIONAL).
+-- 		description = "",	-- The description of this field. (OPTIONAL).
+-- 		value = "",			-- The default value of this field. (OPTIONAL).
+-- 		readonly = false	-- Is this field readonly? Defaults to false (OPTIONAL).
+-- 		
+-- 	}
+-- }
+-- 
+-- @return true|false, string			Returns true if the mod was changed, false and a string is returns if an error occurred.
+----------------------------------------------------------
 function set_fields(modName, data, overwrite)
 	overwrite = overwrite or false
 	
@@ -140,14 +140,14 @@ function set_fields(modName, data, overwrite)
 	return true
 end
 
---[[
-	Returns the value of a mod configurations field
-	
-	@param	string	modName		The name of the mod.
-	@param	string	field		The name of the field.
-	
-	@return	nil|*		Returns nil if the field doesn't exist. Otherwise the value of the field.
-]]--
+----------------------------------------------------------
+-- Returns the value of a mod configurations field
+----------------------------------------------------------
+-- @param	string	modName		The name of the mod.
+-- @param	string	field		The name of the field.
+-- 
+-- @return	nil|*		Returns nil if the field doesn't exist. Otherwise the value of the field.
+----------------------------------------------------------
 function get_value(modName, field)
 	
 	if global.modConfigs[modName] == nil or global.modConfigs[modName][field] == nil then
@@ -157,14 +157,14 @@ function get_value(modName, field)
 	return global.modConfigs[modName][field]["value"]
 end
 
---[[
-	Return the whole field of a mod's configurations field
-	
-	@param	string	modName		The name of the mod.
-	@param	string	field		The name of the field.
-	
-	@return nil|table	Returns nil if the field doesn't exist. Otherwise the field itself.
-]]--
+----------------------------------------------------------
+-- Return the whole field of a mod's configurations field
+----------------------------------------------------------
+-- @param	string	modName		The name of the mod.
+-- @param	string	field		The name of the field.
+-- 
+-- @return nil|table	Returns nil if the field doesn't exist. Otherwise the field itself.
+----------------------------------------------------------
 function get_field(modName, field)
 	if global.modConfigs[modName] == nil or global.modConfigs[modName][field] == nil then
 		return nil
@@ -173,13 +173,13 @@ function get_field(modName, field)
 	return global.modConfigs[modName][field]
 end
 
---[[
-	Return a table of all fields in a mod's configuration
-	
-	@param	string	modName		The name of the mod.
-	
-	@return nil|table Returns nil if the mod doesn't exist. Otherwise all the fields.
-]]--
+----------------------------------------------------------
+-- Return a table of all fields in a mod's configuration
+----------------------------------------------------------
+-- @param	string	modName		The name of the mod.
+-- 
+-- @return nil|table Returns nil if the mod doesn't exist. Otherwise all the fields.
+----------------------------------------------------------
 function get_fields(modName)
 	if global.modConfigs[modName] == nil then
 		return nil
@@ -188,13 +188,13 @@ function get_fields(modName)
 	return global.modConfigs[modName]
 end
 
---[[
-	Check to see if a mod has added any configuration fields
-	
-	@param	string	modName		The name of the mod.
-	
-	@return boolean
-]]--
+----------------------------------------------------------
+-- Check to see if a mod has added any configuration fields
+----------------------------------------------------------
+-- @param	string	modName		The name of the mod.
+-- 
+-- @return boolean
+----------------------------------------------------------
 function mod_exists(modName)
 	return global.modConfigs[modName] ~= nil
 end
