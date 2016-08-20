@@ -20,10 +20,10 @@ Config Editor
 These methods are called from anywhere within a mod by using the _remote.call()_ method.
 See [examples/simple](examples/Simple/control.lua#L66) for an example.
 
-#### get_config_changed_event
+#### get_config_changed_event()
 ###### Get the generated ID for the config_changed event. This event is triggered whenever a mod makes changes to an option.
 
-#### set_field
+#### set_field(modName,  field, value, dataType, description, readonly)
 ###### Set a field on a mod's configuration
 * modName     {string}      - The name of the mod which you want to add this field to.
 * field       {string}      - The name of the field.
@@ -32,7 +32,7 @@ See [examples/simple](examples/Simple/control.lua#L66) for an example.
 * description {string|nil}  - The description of this field. Will be added to the tooltip on the configuration screen. (Optional)
 * readonly    {boolean|nil} - Is this field read-only? Defaults to false. (Optional)
 
-#### set_fields
+#### set_fields(modName, data, overwrite)
 ###### Set all fields of a mod configuration
 * modName     {string}      - The name of the mod which you want to add/replace these fields to.
 * data        {table}       - The new configuration options for this mod, see below for format.
@@ -53,27 +53,27 @@ data = {
 }
 ```
 
-#### get_field
+#### get_field(modName, field)
 ###### Return the whole field of a mod's configurations option
 * modName   {string} - The name of the mod.
 * field     {string} - The name of the field.
 
 *Returns nil if the mod/field doesn't exist or a table. See the data parameter format on set_fields for the table format*
 
-#### get_fields
+#### get_fields(modName)
 ###### Return a table of all fields in a mod's configuration
 * modName   {string} - The name of the mod.
 
 *Returns nil if the mod doesn't exist or a table. See the data parameter format on set_fields for the table format*
 
-#### get_value
+#### get_value(modName, field)
 ###### Returns the value of a mod configurations option
 * modName   {string} - The name of the mod.
 * field     {string} - The name of the field.
 
 *Returns nill if the field or mod doesn't exist. Otherwise the value of the field.*
 
-#### mod_exists
+#### mod_exists(modName)
 ###### Check to see if a mod has added any configuration options
 * modName   {string} - The name of the mod.
 
