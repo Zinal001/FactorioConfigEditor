@@ -6,17 +6,6 @@ function on_player_joined_game(event)
 	if player.admin then
 		create_gui_button(player)
 	end
-	
-	local debugConfig = {
-		enabled = {type = "boolean", title = "Enabled", value = true, description = "Is this mod enabled or not"},
-		num_Of_Players = {type = "number", title = "Number of Players", value = 10, description = "Number of players allowed"},
-		output = {type = "string", title = "Output", value = "Hello World!", readonly = true},
-		tbl = {type = "table", title = "Configs", value = {
-			{type = "number", title = "Num Enemies", value = 0}
-		}}
-	}
-	
-	set_fields("DebugMod", debugConfig)
 end
 
 function on_init()
@@ -256,7 +245,6 @@ function create_gui_main(player)
 	})
 	
 	local mods = game.active_mods
-	mods["DebugMod"] = "0.0.0"
 	
 	local cMods = math.floor(table.count(mods) / 4)
 	
