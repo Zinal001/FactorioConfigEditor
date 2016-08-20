@@ -10,6 +10,7 @@ Instead, use this mod to store and sync your mod's configuration options between
 
 The mod/interface can be found in the src folder.
 
+---
 ## Interface
 
 #####Interface name:
@@ -84,3 +85,15 @@ data = {
 ###### *The id of this event can only be obtained by calling the get_config_changed_event*
 * mod  {string} - The name of the mod that has been changed.
 * data {table}  - A table of all the configuration options in the mod.
+
+---
+## Screenshots
+
+**Config Editor adds a small button to the gui**
+![](media/GUIButton.jpg "Config Editor adds a small button to the gui")
+
+**The main menu - Lists all mods that currently have configuration options**
+![](media/EditorMenu.jpg "The main menu - Lists all mods that currently have configuration options")
+
+**The mod configuration menu - Lists all options that you can change on a mod**
+![](media/ConfigMenu.jpg "The mod configuration menu - Lists all options that you can change")
