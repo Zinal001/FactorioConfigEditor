@@ -5,7 +5,7 @@ function on_player_joined_game(event)
 	
 	if player.admin then
 		create_gui_button(player)
-	end
+	end	
 end
 
 function on_init()
@@ -34,27 +34,27 @@ end
 
 --[[ REMOTE FUNCTIONS ]]--
 
-----------------------------------------------------------
--- Get the generated ID for the config_changed event.
---
--- @return uid
-----------------------------------------------------------
+--[[
+	Get the generated ID for the config_changed event.
+	
+	@return uid
+]]--
 function get_config_changed_event()
 	return global.config_changed_event
 end
 
-----------------------------------------------------------
--- Set a field on a mod configuration
-----------------------------------------------------------
--- @param	string		modName			The name of the mod.
--- @param	string		field			The field to set_field.
--- @param	*			value			The default value of the field.
--- @param	string|nil	dataType		The type of the field. If nil, will be determined by the value.
--- @param	string|nil	description		The description of the field. Will be added to the tooltip.
--- @param	boolean|nil	readonly		Is this field readonly? Defaults to false.
--- 
--- @return void
-----------------------------------------------------------
+--[[
+	Set a field on a mod configuration
+	
+	@param	string		modName			The name of the mod.
+	@param	string		field			The field to set_field.
+	@param	*			value			The default value of the field.
+	@param	string|nil	dataType		The type of the field. If nil, will be determined by the value.
+	@param	string|nil	description		The description of the field. Will be added to the tooltip.
+	@param	boolean|nil	readonly		Is this field readonly? Defaults to false.
+	
+	@return void
+]]--
 function set_field(modName, field, value, dataType, title, description, readonly)
 	if global.modConfigs[modName] == nil then
 		global.modConfigs[modName] = {}
@@ -73,27 +73,27 @@ function set_field(modName, field, value, dataType, title, description, readonly
 	_Raise_Event(modName)
 end
 
-----------------------------------------------------------
--- Set all fields of a mod configuration
-----------------------------------------------------------
--- @param	string		modName			The name of the mod.
--- @param	table		data			The new configuration of the mod, see below for format.
--- @param	boolean		overwrite		True to overwrite the mod configuration. This will delete any field that is not present in the data parameter. Defaults to false.
--- 
--- data format:
--- data = {
--- 	Field1 = {				-- The name of the field.
--- 		type = "dataType", 	-- The type of the value (string, number & boolean is currently supported).
--- 		title = "",			-- The human-readable name of this field. (OPTIONAL).
--- 		description = "",	-- The description of this field. (OPTIONAL).
--- 		value = "",			-- The default value of this field. (OPTIONAL).
--- 		readonly = false	-- Is this field readonly? Defaults to false (OPTIONAL).
--- 		
--- 	}
--- }
--- 
--- @return true|false, string			Returns true if the mod was changed, false and a string is returns if an error occurred.
-----------------------------------------------------------
+--[[
+	Set all fields of a mod configuration
+	
+	@param	string		modName			The name of the mod.
+	@param	table		data			The new configuration of the mod, see below for format.
+	@param	boolean		overwrite		True to overwrite the mod configuration. This will delete any field that is not present in the data parameter. Defaults to false.
+	
+	data format:
+	data = {
+		Field1 = {				-- The name of the field.
+			type = "dataType", 	-- The type of the value (string, number & boolean is currently supported).
+			title = "",			-- The human-readable name of this field. (OPTIONAL).
+			description = "",	-- The description of this field. (OPTIONAL).
+			value = "",			-- The default value of this field. (OPTIONAL).
+			readonly = false	-- Is this field readonly? Defaults to false (OPTIONAL).
+			
+		}
+	}
+	
+	@return true|false, string			Returns true if the mod was changed, false and a string is returns if an error occurred.
+]]--
 function set_fields(modName, data, overwrite)
 	overwrite = overwrite or false
 	
@@ -140,14 +140,14 @@ function set_fields(modName, data, overwrite)
 	return true
 end
 
-----------------------------------------------------------
--- Returns the value of a mod configurations field
-----------------------------------------------------------
--- @param	string	modName		The name of the mod.
--- @param	string	field		The name of the field.
--- 
--- @return	nil|*		Returns nil if the field doesn't exist. Otherwise the value of the field.
-----------------------------------------------------------
+--[[
+	Returns the value of a mod configurations field
+	
+	@param	string	modName		The name of the mod.
+	@param	string	field		The name of the field.
+	
+	@return	nil|*		Returns nil if the field doesn't exist. Otherwise the value of the field.
+]]--
 function get_value(modName, field)
 	
 	if global.modConfigs[modName] == nil or global.modConfigs[modName][field] == nil then
@@ -157,14 +157,14 @@ function get_value(modName, field)
 	return global.modConfigs[modName][field]["value"]
 end
 
-----------------------------------------------------------
--- Return the whole field of a mod's configurations field
-----------------------------------------------------------
--- @param	string	modName		The name of the mod.
--- @param	string	field		The name of the field.
--- 
--- @return nil|table	Returns nil if the field doesn't exist. Otherwise the field itself.
-----------------------------------------------------------
+--[[
+	Return the whole field of a mod's configurations field
+	
+	@param	string	modName		The name of the mod.
+	@param	string	field		The name of the field.
+	
+	@return nil|table	Returns nil if the field doesn't exist. Otherwise the field itself.
+]]--
 function get_field(modName, field)
 	if global.modConfigs[modName] == nil or global.modConfigs[modName][field] == nil then
 		return nil
@@ -173,13 +173,13 @@ function get_field(modName, field)
 	return global.modConfigs[modName][field]
 end
 
-----------------------------------------------------------
--- Return a table of all fields in a mod's configuration
-----------------------------------------------------------
--- @param	string	modName		The name of the mod.
--- 
--- @return nil|table Returns nil if the mod doesn't exist. Otherwise all the fields.
-----------------------------------------------------------
+--[[
+	Return a table of all fields in a mod's configuration
+	
+	@param	string	modName		The name of the mod.
+	
+	@return nil|table Returns nil if the mod doesn't exist. Otherwise all the fields.
+]]--
 function get_fields(modName)
 	if global.modConfigs[modName] == nil then
 		return nil
@@ -188,13 +188,13 @@ function get_fields(modName)
 	return global.modConfigs[modName]
 end
 
-----------------------------------------------------------
--- Check to see if a mod has added any configuration fields
-----------------------------------------------------------
--- @param	string	modName		The name of the mod.
--- 
--- @return boolean
-----------------------------------------------------------
+--[[
+	Check to see if a mod has added any configuration fields
+	
+	@param	string	modName		The name of the mod.
+	
+	@return boolean
+]]--
 function mod_exists(modName)
 	return global.modConfigs[modName] ~= nil
 end
@@ -270,7 +270,48 @@ function create_gui_main(player)
 		caption = "Close"
 	})
 	
+end
+
+function _create_gui_table_for(modPath, title, fields, parent)
 	
+	local tbl = parent.add({
+		type = "table",
+		name = modPath .. "|:|table",
+		colspan = 2,
+		style = "table_style"
+	})
+	
+	for field, data in pairs(fields) do
+		
+		if data["type"] == "table" and type(data["value"]) == "table" then
+		
+			tbl.add({
+				type = "label",
+				caption = data["title"] or field,
+				tooltip = data["description"] or ""
+			})
+			
+			local flow = tbl.add({
+				type = "flow",
+				direction = "vertical",
+				name = modPath .. "|:|flow",
+				style = "flow_style"
+			})
+			
+			_create_gui_table_for(modPath .. "|:|" .. field, data["title"] or field, data["value"], flow)
+		
+		else
+			local label, row = _to_row(modPath, field, data, tbl)
+		
+			if row ~= nil then
+				tbl.add(label)
+				tbl.add(row)
+			end
+		end
+		
+		
+		
+	end
 	
 end
 
@@ -290,24 +331,15 @@ function create_gui_mod_config(player, modName)
 		direction = "vertical"
 	})
 	
-	local tbl = wnd.add({
-		type = "table",
-		name = "modConfigTable",
-		colspan = 2
+	local flow = wnd.add({
+		type = "flow",
+		name = "modConfigFlow",
+		direction = "vertical"
 	})
 	
 	local fields = get_fields(modName)
+	_create_gui_table_for("base", "Main", fields, flow)
 	
-	for field, data in pairs(fields) do
-		
-		local label, row = _to_row(modName, field, data, tbl)
-		
-		if row ~= nil then
-			tbl.add(label)
-			tbl.add(row)
-		end
-		
-	end
 	
 	local btnFlow = wnd.add({
 		type = "flow",
@@ -328,7 +360,7 @@ function create_gui_mod_config(player, modName)
 	
 end
 
-function _to_row(modName, field, data)
+function _to_row(modPath, field, data)
 
 	if type(data) ~= "table" or data["type"] == nil then
 		return nil, nil
@@ -352,24 +384,27 @@ function _to_row(modName, field, data)
 		
 		element = {
 			type = "textfield",
-			name = modName .. "_" .. field .. "_" .. dataType,
-			text = data["value"] or ""
+			name = modPath .. "|:|" .. field,
+			text = data["value"] or "",
+			style = "textfield_style"
 		}
 		
 	elseif dataType == "number" then
 	
 		element = {
 			type = "textfield",
-			name = modName .. "_" .. field .. "_" .. dataType,
-			text = data["value"] or "0"
+			name = modPath .. "|:|" .. field,
+			text = data["value"] or "0",
+			style = "number_textfield_style"
 		}
 		
 	elseif dataType == "boolean" then
 	
 		element = {
 			type = "checkbox",
-			name = modName .. "_" .. field .. "_" .. dataType,
-			state = data["value"] or false
+			name = modPath .. "|:|" .. field,
+			state = data["value"] or false,
+			style = "checkbox_style"
 		}
 		
 	else
@@ -411,59 +446,45 @@ function on_gui_click(event)
 		
 		local modName = global.playerData[player.name .. "_" .. player.index]["config_mod_name"]
 		
-		local tbl = player.gui.center.modConfigWindow.modConfigTable
+		local values = {}
 		
-		local modValues = {}
-		local saveMod = true
-	
-		for _, field in ipairs(tbl.children_names) do
-			if #field > 0 then
+		local saveMod = traverse_mod_path(player.gui.center.modConfigWindow.modConfigFlow, values, player)
+		
+		local nValues = {}
+		
+		for key, value in pairs(values) do
+			local nKey = string.gsub(key, "base|:|", "")
+			
+			local path = string.explode("|:|", nKey)
+			
+			if #path == 1 then
+				nValues[path[1]] = value
+			else
+				--@TODO: This really needs a rewrite
+				local nPath = {}
+				for i = 1, #path - 1 do
+					table.insert(nPath, {})
+				end
 				
-				local parts = {}
-				
-				if string.starts(field, modName .. "_") then
-				
-					local rField = string.sub(field, #modName + 2)
-					parts = string.explode("_", rField)
-					
-					local fieldType = parts[#parts]
-					local fieldName = parts[1]
-					
-					if #parts > 2 then
-						fieldName = parts[1]
-						for i = 2, #parts - 1, 1 do
-							fieldName = fieldName .. "_" .. parts[i]
-						end
+				table.insert(nPath, value)
+			
+				local p = nValues
+				for i = 1, #nPath do
+					if p[path[i]] == nil then
+						p[path[i]] = nPath[i]
 					end
-					
-					if fieldType == "string" then
-						modValues[fieldName] = tbl[field].text
-					elseif fieldType == "number" then
-						local numValue = tonumber(tbl[field].text)
-						
-						if numValue == nil then
-							player.print("Field " .. fieldName .. " is not a number")
-							saveMod = false
-							break
-						end
-						
-						modValues[fieldName] = numValue
-					elseif fieldType == "boolean" then
-						modValues[fieldName] = tbl[field].state
-					end	
-					
+					p = p[path[i]]				
 				end
 			end
 			
 		end
 		
-		if saveMod then		
-			for field, value in pairs(modValues) do
-				global.modConfigs[modName][field].value = value
-			end
+		if saveMod then
+			save_mod_data(global.modConfigs[modName], nValues)
 			
 			_Raise_Event(modName)
 			player.gui.center.modConfigWindow.destroy()
+			player.print(modName .. "'s configuration saved")
 		end
 	
 	elseif element.name == "modConfigWindow_Cancel_Btn" then
@@ -478,6 +499,67 @@ function on_gui_click(event)
 		player.gui.center.configWindow.destroy()
 	end
 	
+end
+
+--[[ MISC GUI FUNCTIONS]]--
+
+function traverse_mod_path(elm, values, player)
+	
+	values = values or {}
+	
+	local children_names = elm.children_names
+	
+	for _, elementName in ipairs(children_names) do
+		local element = elm[elementName]
+		
+		if element ~= nil then
+			local path = string.explode("|:|", element.name)
+			
+			if element.style.name == "textfield_style" then
+			
+				values[element.name] = element.text
+			
+			elseif element.style.name == "number_textfield_style" then
+				local numValue = tonumber(element.text)
+					
+				if numValue == nil then
+					player.print("Field " .. fieldName .. " is not a number")
+					return false
+				end
+				
+				values[element.name] = numValue
+				
+			elseif element.style.name == "checkbox_style" then
+			
+				values[element.name] = element.state
+			
+			elseif element.style.name == "flow_style" then
+				local tName = element.children_names[1]
+				
+				traverse_mod_path(element[tName], values, player)
+			elseif element.style.name == "table_style" then
+				traverse_mod_path(element, values, player)
+			end
+			
+		end
+		
+	end
+	
+	return true
+end
+
+function save_mod_data(modGlobal, data)
+
+	for field, value in pairs(data) do
+		
+		if modGlobal[field] ~= nil then
+			if type(value) == "table" then
+				save_mod_data(modGlobal[field].value, data[field])
+			else
+				modGlobal[field].value = value
+			end
+		end
+	end
 end
 
 --[[ MISC FUNCTIONS ]]--
