@@ -1,4 +1,4 @@
-# FactorioConfigEditor
+# ConfigEditor
 An In-Game Configuration Editor for mods
 
 Config Editor is a Remote Interface mod for Factorio which creates an in-game configuration editor for other mods.
