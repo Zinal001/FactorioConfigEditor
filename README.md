@@ -8,7 +8,7 @@ Making a config.lua file to store a mods configuration options is not ideal for 
 Instead, use this mod to store and sync your mod's configuration options between clients!
 
 
-The mod/interface can be found in the src folder.
+The mod/interface can be found in the [src folder](src/).
 
 ---
 ## Interface
