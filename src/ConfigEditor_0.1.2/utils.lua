@@ -3,6 +3,10 @@ function string.starts(String,Start)
    return string.sub(String,1,string.len(Start))==Start
 end
 
+function string.ends(String,End)
+   return End=='' or string.sub(String,-string.len(End))==End
+end
+
 function string.explode(d,p)
   local t, ll
   t={}
@@ -55,6 +59,8 @@ function _def_value(dataType)
 		return 0
 	elseif dataType == "boolean" then
 		return false
+	elseif dataType == "table" then
+		return {}
 	else
 		return nil
 	end

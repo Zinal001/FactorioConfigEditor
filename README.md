@@ -79,6 +79,14 @@ data = {
 
 *Returns true if a mod has added any configuration options, false if not*
 
+#### generate_compatible_output(data, writeFile)
+##### Convert a table to a compatible config table
+* data			{table}		- The table to convert.
+* writeFile		{boolean}	- True if you want the table to be printed to a lua file (compatible_output.lua) in the 'script-output' folder. (Defaults to false)
+
+*Returns the newly formatted table*
+*Not that fields such as title and description is the same as is filled-in with the fields name*
+
 ### Events
 #### config_changed
 ###### This event is triggered whenever a mod makes changes to an option.

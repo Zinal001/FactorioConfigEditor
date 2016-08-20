@@ -1,11 +1,12 @@
 require("utils")
+require("inspect")
 
 function on_player_joined_game(event)
 	local player = game.players[event.player_index]
 	
 	if player.admin then
 		create_gui_button(player)
-	end	
+	end
 end
 
 function on_init()
@@ -199,6 +200,64 @@ function mod_exists(modName)
 	return global.modConfigs[modName] ~= nil
 end
 
+
+function _generate_compatible_output(data, tbl)
+	tbl = tbl or {}
+	
+	for k, v in pairs(data) do
+	
+		local vType = type(v)
+		
+		local field = {
+			title = k,
+			description = k
+		}
+		
+		if vType == "table" then
+			field["type"] = "table"
+			field["value"] = _generate_compatible_output(v, {})
+		elseif vType == "number" then
+			field["type"] = "number"
+			field["value"] = v or _def_value("number")
+		elseif vType == "string" then
+			field["type"] = "string"
+			field["value"] = v or _def_value("string")
+		elseif vType == "boolean" then
+			field["type"] = "boolean"
+			field["value"] = v or _def_value("boolean")
+		end
+		
+		tbl[k] = field
+	end
+	
+	return tbl
+end
+
+
+--[[
+	Convert a table to a compatible config table
+	
+	@param	table		data		The table to convert
+	@param	boolean		writeFile	True if you want the table to be printed to an lua file in the 'script-output' folder. (Defaults to false)
+	
+	@return table The newly formatted table
+]]--
+function generate_compatible_output(data, writeFile)
+	writeFile = writeFile or false
+
+	local tbl = {}
+	
+	_generate_compatible_output(data, tbl)
+	
+	if writeFile then
+		game.write_file("compatible_output.lua", inspect(tbl), false)
+	end
+	
+	return tbl
+end
+
+
+
 --[[ REMOTE DECLARATION ]]--
 
 remote.add_interface("Config Editor", {
@@ -208,7 +267,8 @@ remote.add_interface("Config Editor", {
 	get_field = get_field,
 	get_fields = get_fields,
 	get_value = get_value,
-	mod_exists = mod_exists
+	mod_exists = mod_exists,
+	generate_compatible_output = generate_compatible_output
 })
 
 
