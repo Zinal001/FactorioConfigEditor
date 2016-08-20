@@ -83,7 +83,7 @@ end
 	data format:
 	data = {
 		Field1 = {				-- The name of the field.
-			type = "dataType", 	-- The type of the value (string, number & boolean is currently supported).
+			type = "dataType", 	-- The type of the value (string, number, boolean and table is currently supported).
 			title = "",			-- The human-readable name of this field. (OPTIONAL).
 			description = "",	-- The description of this field. (OPTIONAL).
 			value = "",			-- The default value of this field. (OPTIONAL).
