@@ -17,6 +17,7 @@ Config Editor
 
 ### Methods
 These methods are called from anywhere within a mod by using the _remote.call()_ method.
+See [examples/simple](examples/Simple/control.lua#L66) for an example.
 
 #### get_config_changed_event
 ###### Get the generated ID for the config_changed event. This event is triggered whenever a mod makes changes to an option.
@@ -76,3 +77,10 @@ data = {
 * modName   {string} - The name of the mod.
 
 *Returns true if a mod has added any configuration options, false if not*
+
+### Events
+#### config_changed
+###### This event is triggered whenever a mod makes changes to an option.
+###### *The id of this event can only be obtained by calling the get_config_changed_event*
+* mod  {string} - The name of the mod that has been changed.
+* data {table}  - A table of all the configuration options in the mod.
