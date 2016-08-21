@@ -274,15 +274,62 @@ remote.add_interface("Config Editor", {
 
 --[[ GUI CREATION ]]--
 
+function create_x_frame(player, name, caption)
+	
+	local wnd = player.gui.center.add({
+		type = "frame",
+		name = name,
+		caption = "",
+		direction = "horizontal"
+	})
+	
+	local leftSide = wnd.add({
+		type = "flow",
+		name = name .. "_left",
+		direction = "vertical"
+	})
+	
+	local rightSide = wnd.add({
+		type = "flow",
+		name = name .. "_right",
+		direction = "vertical"
+	})
+	
+	leftSide.add({
+		type = "label",
+		name = name .. "_titleflow_label",
+		caption = caption,
+		style = "frame_caption_label_style"
+	})
+	
+	rightSide.add({
+		type = "sprite-button",
+		name = name .. "_title_close_btn",
+		sprite = "close_sprite",
+		style = "config_gui_button",
+		tooltip = "Close Window"
+	})
+	
+	local content = leftSide.add({
+		type = "flow",
+		name = name .. "_content",
+		direction = "vertical"
+	})
+	
+	return content, wnd
+end
+
 function create_gui_button(player)
 	if player.gui.top.configEditorBtn ~= nil then
 		player.gui.top.configEditorBtn.destroy()
 	end
 	
 	player.gui.top.add({
-		type = "button",
+		type = "sprite-button",
 		name = "configEditorBtn",
-		caption = "Config Editor"
+		sprite = "config_sprite",
+		style = "config_gui_button",
+		tooltip = "Config Editor"
 	})
 end
 
@@ -291,12 +338,7 @@ function create_gui_main(player)
 		player.gui.center.configWindow.destroy()
 	end
 	
-	local wnd = player.gui.center.add({
-		type = "frame",
-		name = "configWindow",
-		caption = "Config Editor",
-		direction = "vertical"
-	})
+	local wnd = create_x_frame(player, "configWindow", "Config Editor")
 	
 	wnd.add({
 		type = "label",
@@ -323,13 +365,6 @@ function create_gui_main(player)
 			})
 		end
 	end
-	
-	wnd.add({
-		type = "button",
-		name = "configWindow_Close_Btn",
-		caption = "Close"
-	})
-	
 end
 
 function _create_gui_table_for(modPath, title, fields, parent)
@@ -368,9 +403,6 @@ function _create_gui_table_for(modPath, title, fields, parent)
 				tbl.add(row)
 			end
 		end
-		
-		
-		
 	end
 	
 end
@@ -384,21 +416,11 @@ function create_gui_mod_config(player, modName)
 		player.gui.center.modConfigWindow.destroy()
 	end
 	
-	local wnd = player.gui.center.add({
-		type = "frame",
-		name = "modConfigWindow",
-		caption = modName .. " Configs",
-		direction = "vertical"
-	})
+	local wnd = create_x_frame(player, "modConfigWindow", modName .. " Configs")
 	
-	local flow = wnd.add({
-		type = "flow",
-		name = "modConfigFlow",
-		direction = "vertical"
-	})
 	
 	local fields = get_fields(modName)
-	_create_gui_table_for("base", "Main", fields, flow)
+	_create_gui_table_for("base", "Main", fields, wnd)
 	
 	
 	local btnFlow = wnd.add({
@@ -411,13 +433,6 @@ function create_gui_mod_config(player, modName)
 		name = "modConfigWindow_Save_Btn",
 		caption = "Save Settings"
 	})
-	
-	btnFlow.add({
-		type = "button",
-		name = "modConfigWindow_Cancel_Btn",
-		caption = "Cancel"
-	})
-	
 end
 
 function _to_row(modPath, field, data)
@@ -508,7 +523,7 @@ function on_gui_click(event)
 		
 		local values = {}
 		
-		local saveMod = traverse_mod_path(player.gui.center.modConfigWindow.modConfigFlow, values, player)
+		local saveMod = traverse_mod_path(player.gui.center.modConfigWindow.modConfigWindow_left.modConfigWindow_content, values, player)
 		
 		local nValues = {}
 		
@@ -546,19 +561,19 @@ function on_gui_click(event)
 			player.gui.center.modConfigWindow.destroy()
 			player.print(modName .. "'s configuration saved")
 		end
-	
-	elseif element.name == "modConfigWindow_Cancel_Btn" then
 		
-		if global.playerData[player.name .. "_" .. player.index]["config_mod_name"] ~= nil then
-			global.playerData[player.name .. "_" .. player.index]["config_mod_name"] = nil
+	elseif string.ends(element.name, "_title_close_btn") then
+	
+		local wndName = string.sub(element.name, 1, #element.name - 16)
+		player.gui.center[wndName].destroy()
+		
+		if wndName == "modConfigWindow" then
+			if global.playerData[player.name .. "_" .. player.index]["config_mod_name"] ~= nil then
+				global.playerData[player.name .. "_" .. player.index]["config_mod_name"] = nil
+			end
+			create_gui_main(player)
 		end
-		
-		player.gui.center.modConfigWindow.destroy()
-		create_gui_main(player)
-	elseif element.name == "configWindow_Close_Btn" then
-		player.gui.center.configWindow.destroy()
 	end
-	
 end
 
 --[[ MISC GUI FUNCTIONS]]--

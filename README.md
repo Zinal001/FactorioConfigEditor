@@ -71,7 +71,7 @@ data = {
 * modName   {string} - The name of the mod.
 * field     {string} - The name of the field.
 
-*Returns nill if the field or mod doesn't exist. Otherwise the value of the field.*
+*Returns nil if the field or mod doesn't exist. Otherwise the value of the field.*
 
 #### mod_exists(modName)
 ###### Check to see if a mod has added any configuration options
