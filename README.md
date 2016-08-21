@@ -94,7 +94,7 @@ data = {
 * mod  {string} - The name of the mod that has been changed.
 * data {table}  - A table of all the configuration options in the mod.
 
----
+------
 ## Screenshots
 
 **Config Editor adds a small button to the gui**
